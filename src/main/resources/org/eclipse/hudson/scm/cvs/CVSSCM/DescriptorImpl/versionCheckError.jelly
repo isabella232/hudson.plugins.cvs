@@ -1,0 +1,27 @@
+<!-- **************************************************************************
+#
+# Copyright (C) 2004-2011 Oracle Corporation
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#   Kohsuke Kawaguchi
+#
+#************************************************************************** -->
+
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+  <l:layout>
+    <l:header title="Hudson" />
+    <l:side-panel />
+    <l:main-panel>
+      <h1>Failed to launch ${it.cvsExe}</h1>
+      <p>
+        ${h.getWin32ErrorMessage(error)}
+      </p>
+      <p><st:out value="${error.message}"/></p>
+    </l:main-panel>
+  </l:layout>
+</j:jelly>

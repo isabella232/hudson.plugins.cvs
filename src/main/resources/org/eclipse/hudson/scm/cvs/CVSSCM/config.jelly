@@ -1,0 +1,64 @@
+<!-- **************************************************************************
+#
+# Copyright (C) 2004-2011 Oracle Corporation
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#   Kohsuke Kawaguchi
+#
+#************************************************************************** -->
+
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+  <f:entry title="${%Remote locations}">
+    <f:repeatable var="loc" name="moduleLocations" items="${instance.moduleLocations}" noAddButton="true" minimum="1">
+      <table width="100%">
+        <f:entry title="${%Cvsroot}" field="cvsroot">
+          <f:textbox value="${loc.cvsroot}"/>
+        </f:entry>
+        <f:entry title="${%Modules}" field="module">
+          <f:textbox value="${loc.module}" />
+        </f:entry>
+        <f:entry title="${%Branch}" field="branch">
+          <f:textbox value="${loc.branch}" />
+            <div style="padding-left: 2em">
+              <f:checkbox name="loc.isTag" checked="${loc.isTag()}" />
+              <label class="attach-previous"> ${%This is a tag, not a branch}</label>
+            </div>
+        </f:entry>
+        <f:entry title="${%Local directory}" field="localDir">
+          <f:textbox value="${loc.localDir}" />
+        </f:entry>
+        <f:entry>
+          <div align="right">
+            <input type="button" value="${%Add more locations...}" class="repeatable-add show-if-last" />
+            <input type="button" value="${%Delete}" class="repeatable-delete show-if-not-only" style="margin-left: 1em;" />
+          </div>
+        </f:entry>
+      </table>
+    </f:repeatable>
+  </f:entry>
+
+  <f:advanced>
+    <f:entry title="CVS_RSH" field="cvsRsh">
+      <f:textbox />
+    </f:entry>
+    <f:entry title="${%Legacy mode}" field="legacy">
+      <f:checkbox />
+      ${%legacyModeDescription}
+    </f:entry>
+    <f:entry title="${%Use update}" field="canUseUpdate">
+      <f:checkbox default="true" />
+    </f:entry>
+    <t:listScmBrowsers name="cvs.browser" />
+    <f:entry title="${%Excluded Regions}" field="excludedRegions">
+	   <f:textarea />
+	 </f:entry>
+    <f:entry title="${%Prevent Line Ending Conversion}" field="preventLineEndingConversion">
+      <f:checkbox default="false" />
+    </f:entry>
+  </f:advanced>
+</j:jelly>

@@ -1,0 +1,39 @@
+<!-- **************************************************************************
+#
+# Copyright (C) 2004-2011 Oracle Corporation
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http://www.eclipse.org/legal/epl-v10.html
+#
+# Contributors:
+#   Kohsuke Kawaguchi, Harald Wellmann
+#
+#************************************************************************** -->
+
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+  <f:section title="CVS">
+    <f:description>
+      <div align="right">
+        <a href="${rootURL}/scm/CVSSCM/version">${%Check CVS version}</a>
+      </div>
+    </f:description>
+    <f:entry title="${%cvs executable}" field="cvsExe">
+	    <f:textbox />
+	  </f:entry>
+    <f:entry title="${%.cvspass file}" field="cvspassFile">
+      <f:textbox />
+	  </f:entry>
+    <f:advanced>
+      <f:block>
+        <f:checkbox name="cvs_noCompression" id="cvs_noCompression" checked="${descriptor.noCompression}" />
+        <label for="cvs_noCompression">${%Disable CVS compression}</label>
+      </f:block>
+    </f:advanced>
+    <!--
+      if we ever support "advanced" option for CVS, support
+      https://hudson.dev.java.net/issues/show_bug.cgi?id=385
+    -->
+  </f:section>
+</j:jelly>
