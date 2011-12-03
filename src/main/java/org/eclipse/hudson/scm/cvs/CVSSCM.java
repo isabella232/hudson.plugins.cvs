@@ -88,6 +88,8 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.zip.ZipEntry;
 import org.apache.tools.zip.ZipOutputStream;
@@ -729,18 +731,8 @@ public class CVSSCM extends SCM implements Serializable {
                             // didn't include any file.
                             continue;
                         }
-
-                        if (!mf.isDirectory()) {
-                            // this module is just a file, say "foo/bar.txt".
-                            // to record "foo/CVS/*", we need to start by archiving "foo".
-                            int idx = module.lastIndexOf('/');
-                            if (idx == -1) {
-                                throw new Error("Archiving error: module=" + module);
-                            }
-                            module = module.substring(0, idx);
-                            mf = mf.getParentFile();
-                        }
-                        archive(mf, module, zos, true);
+                        archive(mf, ModuleLocationImpl.DEFAULT_LOCAL_DIR.equals(moduleLocation.getLocalDir())
+                                ? ModuleLocationImpl.TAGGING_SUBDIR : moduleLocation.getLocalDir(), zos, true);
                     }
                 }
                 zos.close();
@@ -1580,5 +1572,40 @@ public class CVSSCM extends SCM implements Serializable {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        CVSSCM that = (CVSSCM) o;
+
+        return new EqualsBuilder()
+            .append(canUseUpdate, that.canUseUpdate)
+            .append(flatten, that.flatten)
+            .append(preventLineEndingConversion, that.preventLineEndingConversion)
+            .append(cvsRsh, that.cvsRsh)
+            .append(excludedRegions, that.excludedRegions)
+            .append(moduleLocations, that.moduleLocations)
+            .append(repositoryBrowser, that.repositoryBrowser)
+            .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+            .append(canUseUpdate)
+            .append(flatten)
+            .append(preventLineEndingConversion)
+            .append(cvsRsh)
+            .append(excludedRegions)
+            .append(moduleLocations)
+            .append(repositoryBrowser)
+            .toHashCode();
     }
 }
