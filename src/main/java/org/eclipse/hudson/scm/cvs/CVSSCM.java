@@ -100,7 +100,6 @@ import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 import org.kohsuke.stapler.export.Exported;
 import org.kohsuke.stapler.export.ExportedBean;
-import org.kohsuke.stapler.framework.io.ByteBuffer;
 
 import static hudson.Util.fixEmpty;
 import static hudson.Util.fixEmptyAndTrim;
@@ -1334,7 +1333,7 @@ public class CVSSCM extends SCM implements Serializable {
          */
         public void doVersion(StaplerRequest req, StaplerResponse rsp)
             throws IOException, ServletException, InterruptedException {
-            ByteBuffer baos = new ByteBuffer();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
             try {
                 Hudson.getInstance().createLauncher(TaskListener.NULL).launch()
                     .cmds(getCvsExeOrDefault(), "--version").stdout(baos).join();
