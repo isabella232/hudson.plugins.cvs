@@ -14,7 +14,7 @@
  *******************************************************************************/
 package hudson.model;
 
-import org.eclipse.hudson.scm.cvs.CVSSCM;
+import hudson.scm.cvs.CVSSCM;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
